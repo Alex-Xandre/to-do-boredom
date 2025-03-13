@@ -1,18 +1,22 @@
 'use client';
 import { useState } from 'react';
-import { useTodoStore } from '../store/todo-store';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { PlusIcon } from 'lucide-react';
+import { useCategoryStore } from '../category/store/category-store';
+import { useTodoStore } from './store/tasks-store';
 
 export default function AddTodo() {
-  const { selectedCateg } = useTodoStore();
+  const { selectedCateg } = useCategoryStore();
+  const { addTodo } = useTodoStore();
 
   const [input, setInput] = useState('');
-
-  const { categories, addTodo } = useTodoStore();
 
   const handleSubmit = () => {
     if (!input.trim() || !selectedCateg) return;
     addTodo(input, selectedCateg);
-    setInput('');
+    // setInput('');
   };
 
   return (
@@ -25,19 +29,21 @@ export default function AddTodo() {
           </option>
         ))}
       </select> */}
-      <input
+      <Input
         type='text'
         value={input}
         onChange={(e) => setInput(e.target.value)}
         className='border p-2 rounded w-full'
         placeholder='Add a new task...'
       />
-      <button
+      <Button
         onClick={handleSubmit}
-        className='bg-blue-500 text-white px-4 py-2 rounded'
+        className='inline-flex items-center !h-fit '
+        variant='default'
       >
-        ➕
-      </button>
+        <PlusIcon className='h-3' />
+        Save
+      </Button>
     </div>
   );
 }

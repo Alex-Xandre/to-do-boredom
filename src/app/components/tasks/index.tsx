@@ -1,24 +1,20 @@
 'use client';
-
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useTodoStore } from './store/tasks-store';
+import { useCategoryStore } from '../category/store/category-store';
+import TodoItem from './card';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import TodoItem from './TodoItem';
-import { useTodoStore } from '../store/todo-store';
-import AddTodo from './AddTodo';
-import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+import './task.css';
 
-export default function TodoList() {
-  const { todos, fetchTodos, reorderTodos, deleteTodo, selectedCateg } = useTodoStore();
-  const [animatedTodos, setAnimatedTodos] = useState(todos);
+import AddTodo from './new';
+
+const TaskList = () => {
+  const { todos, fetchTodos, reorderTodos, deleteTodo } = useTodoStore();
+  const { selectedCateg } = useCategoryStore();
 
   useEffect(() => {
     fetchTodos();
-  }, [fetchTodos]); // ✅ Added dependency to prevent warnings
-
-  useEffect(() => {
-    setAnimatedTodos(todos);
-  }, [todos]);
+  }, [fetchTodos]);
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -52,7 +48,7 @@ export default function TodoList() {
             <ul
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className='space-y-2'
+              className=' items-center w-[95vw]  justify-center flex    absolute bottom-12 flex-wrap '
             >
               {todos?.length > 0 && todos.filter((x) => x.categoryId === selectedCateg).length > 0 ? (
                 todos.map((todo, index) => (
@@ -73,7 +69,7 @@ export default function TodoList() {
                   </Draggable>
                 ))
               ) : (
-                <p className='text-gray-500'>No todos yet.</p>
+                <p className='text-gray-500 m-2'>No todos yet.</p>
               )}
               {provided.placeholder}
             </ul>
@@ -83,18 +79,31 @@ export default function TodoList() {
         {/* 🗑️ Trash Drop Zone */}
         <Droppable droppableId='trash'>
           {(provided) => (
-            <Button
-              variant='destructive'
-              className='absolute right-5 bottom-5'
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              <TrashIcon /> Drag here to delete
-              {provided.placeholder}
-            </Button>
+            // <Button
+            //   variant='destructive'
+            //   className='absolute right-5 bottom-5'
+            //   ref={provided.innerRef}
+            //   {...provided.droppableProps}
+            // >
+            //   <TrashIcon /> Drag here to delete
+            //   {provided.placeholder}
+            // </Button>
+
+            <div className='absolute bottom-5 right-5'>
+              <span
+                className='trash '
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                <span></span>
+                <i></i>
+              </span>
+            </div>
           )}
         </Droppable>
       </DragDropContext>
     </div>
   );
-}
+};
+
+export default TaskList;

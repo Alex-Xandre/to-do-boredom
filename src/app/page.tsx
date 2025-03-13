@@ -1,13 +1,12 @@
-import AddTodo from './components/AddTodo';
-import CategoryList from './components/CategoryList';
-import TodoList from './components/TodoList';
-import { useTodoStore } from './store/todo-store';
+
+import CategoryHome from './components/category';
+import TaskList from './components/tasks';
 
 export default function Home() {
   return (
     <main className='mx-auto pt-10 h-screen flex flex-col'>
-      <CategoryList />
-      <TodoList />
+      <CategoryHome />
+     <TaskList/>
     </main>
   );
 }

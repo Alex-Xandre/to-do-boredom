@@ -1,0 +1,131 @@
+.trash {
+  background: #ff6873;
+  width: 66px;
+  height: 80px;
+  display: inline-block;
+  margin: 0 auto;
+
+  position: relative;
+  -webkit-border-bottom-right-radius: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -moz-border-radius-bottomleft: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.trash span {
+  position: absolute;
+  height: 12px;
+  background: #ff6873;
+  top: -19px;
+  left: -10px;
+  right: -10px;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transform: rotate(0deg);
+  transition: transform 250ms;
+  transform-origin: 19% 100%;
+}
+.trash span:after {
+  content: '';
+  position: absolute;
+  width: 27px;
+  height: 7px;
+  background: #ff6873;
+  top: -10px;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transform: rotate(0deg);
+  transition: transform 250ms;
+  transform-origin: 19% 100%;
+  left: 27px;
+}
+
+.trash i {
+  position: relative;
+  width: 5px;
+  height: 50px;
+  background: #fff;
+  display: block;
+  margin: 14px auto;
+  border-radius: 5px;
+}
+.trash i:after {
+  content: '';
+  width: 5px;
+  height: 50px;
+  background: #fff;
+  position: absolute;
+  left: -18px;
+  border-radius: 5px;
+}
+.trash i:before {
+  content: '';
+  width: 5px;
+  height: 50px;
+  background: #fff;
+  position: absolute;
+  right: -18px;
+  border-radius: 5px;
+}
+
+.trash:hover span {
+  transform: rotate(-45deg);
+  transition: transform 250ms;
+}
+
+.paper {
+  width: 150px;
+  height: 200px;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.paper:hover {
+  animation: crumple 0.8s ease-in-out forwards;
+}
+
+@keyframes crumple {
+  0% {
+    transform: rotate(0) scale(1);
+    filter: blur(0px);
+  }
+  20% {
+    transform: rotate(5deg) skew(10deg, 5deg) scale(0.9);
+    filter: blur(1px);
+  }
+  40% {
+    transform: rotate(-10deg) skew(-10deg, 15deg) scale(0.7);
+    filter: blur(2px);
+  }
+  60% {
+    transform: rotate(20deg) skew(20deg, -10deg) scale(0.5);
+    filter: blur(3px);
+  }
+  80% {
+    transform: rotate(-25deg) skew(-15deg, 20deg) scaleX(0.3) scaleY(0.4);
+    filter: blur(4px);
+  }
+  100% {
+    transform: rotate(30deg) skew(30deg, -30deg) scaleX(0.1) scaleY(0.2);
+    filter: blur(6px);
+    border-radius: 10px;
+  }
+}
+@keyframes tilt-shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  .hover-shake:hover {
+    animation: tilt-shake 1s ease-in-out infinite;
+  }
+  

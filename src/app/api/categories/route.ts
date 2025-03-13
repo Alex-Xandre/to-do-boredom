@@ -29,7 +29,6 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   const { categoryId1, categoryId2, id, name } = await req.json();
 
-  // Handle category swap
   if (categoryId1 && categoryId2) {
     const category1 = await prisma.category.findUnique({ where: { id: categoryId1 } });
     const category2 = await prisma.category.findUnique({ where: { id: categoryId2 } });
@@ -38,24 +37,18 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: 'Category not found' }, { status: 404 });
     }
 
-    // Check if the categories are actually different in order
-    if (category1.order !== category2.order) {
-      // Swap the order values only if they are different
-      const updatedCategory1 = await prisma.category.update({
-        where: { id: categoryId1 },
-        data: { order: category2.order },
-      });
+    // Swap the order values
+    const updatedCategory1 = await prisma.category.update({
+      where: { id: categoryId1 },
+      data: { order: category2.order },
+    });
 
-      const updatedCategory2 = await prisma.category.update({
-        where: { id: categoryId2 },
-        data: { order: category1.order },
-      });
+    const updatedCategory2 = await prisma.category.update({
+      where: { id: categoryId2 },
+      data: { order: category1.order },
+    });
 
-      return NextResponse.json({ updatedCategory1, updatedCategory2 });
-    } else {
-      // If orders are the same, return the categories as they are
-      return NextResponse.json({ updatedCategory1: category1, updatedCategory2: category2 });
-    }
+    return NextResponse.json({ updatedCategory1, updatedCategory2 });
   }
 
   // Handle category name update
@@ -69,6 +62,7 @@ export async function PUT(req: Request) {
 
   return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
 }
+
 
 // Delete category
 export async function DELETE(req: Request) {
